@@ -166,9 +166,9 @@ void AC_PrecLand::init(uint16_t update_rate_hz)
             _backend = new AC_PrecLand_SITL(*this, _backend_state);
             break;
 #endif
-        //case PRECLAND_TYPE_RTK:
-        //    _backend = new AC_PrecLand_RTK(*this, _backend_state);
-        //    break;
+        case PRECLAND_TYPE_RTK:
+            _backend = new AC_PrecLand_RTK(*this, _backend_state);
+            break;
     }
 
     // init backend
