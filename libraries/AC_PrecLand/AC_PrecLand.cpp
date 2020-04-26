@@ -7,7 +7,7 @@
 #include "AC_PrecLand_IRLock.h"
 #include "AC_PrecLand_SITL_Gazebo.h"
 #include "AC_PrecLand_SITL.h"
-//#include "AC_PrecLand_RTK.h"
+#include "AC_PrecLand_RTK.h"
 
 #include <AP_AHRS/AP_AHRS.h>
 
