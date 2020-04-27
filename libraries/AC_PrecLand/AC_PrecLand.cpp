@@ -113,8 +113,8 @@ const AP_Param::GroupInfo AC_PrecLand::var_info[] = {
 // Note that the Vector/Matrix constructors already implicitly zero
 // their values.
 //
-AC_PrecLand::AC_PrecLand(const AP_AHRS& ahr) :
-    _ahr(ahr) 
+AC_PrecLand::AC_PrecLand(const AP_AHRS& ahrs) :
+    _ahrs(ahrs) 
 {
     // set parameters to defaults
     AP_Param::setup_object_defaults(this, var_info);
@@ -394,7 +394,7 @@ bool AC_PrecLand::construct_pos_meas_using_rangefinder(float rangefinder_alt_m, 
         //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
         if (alt_valid) {
             float alt = MAX(rangefinder_alt_m, 0.0f);
-            if (_ahr.get_relative_position_NE_home(cur_pos)) {
+            if (_ahrs.get_relative_position_NE_home(cur_pos)) {
                 //::printf("chobits: %f %f\n", cur_pos.x, cur_pos.y);
                 //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
                 _target_pos_rel_meas_NED.x = -cur_pos.x;

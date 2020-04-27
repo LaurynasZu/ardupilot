@@ -707,7 +707,7 @@ private:
 #endif
 
 namespace AP {
-    AP_AHRS &ahr();
+    AP_AHRS &ahrs();
 
     // use ahrs_navekf() only where the AHRS interface doesn't expose the
     // functionality you require:
