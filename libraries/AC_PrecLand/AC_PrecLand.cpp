@@ -190,25 +190,20 @@ void AC_PrecLand::update(float rangefinder_alt_cm, bool rangefinder_alt_valid)
     // append current velocity and attitude correction into history buffer
     struct inertial_data_frame_s inertial_data_newest;
     //const AP_AHRS_NavEKF &_ahrs = AP::ahrs_navekf();
-    //_ahrs.getCorrectedDeltaVelocityNED(inertial_data_newest.correctedVehicleDeltaVelocityNED, inertial_data_newest.dt);
-    //inertial_data_newest.Tbn = _ahrs.get_rotation_body_to_ned();
-    //Vector3f curr_vel;
-    //nav_filter_status status;
-    //if (!_ahrs.get_velocity_NED(curr_vel) || !_ahrs.get_filter_status(status)) {
-    //    inertial_data_newest.inertialNavVelocityValid = false;
-    //} else {
-    //    inertial_data_newest.inertialNavVelocityValid = status.flags.horiz_vel;
-    //}
-    //curr_vel.z = -curr_vel.z;  // NED to NEU
-    //inertial_data_newest.inertialNavVelocity = curr_vel;
-
-    //inertial_data_newest.time_usec = AP_HAL::micros64();
-    //_inertial_history->push_force(inertial_data_newest);
-
+    _ahrs.getCorrectedDeltaVelocityNED(inertial_data_newest.correctedVehicleDeltaVelocityNED, inertial_data_newest.dt);
     inertial_data_newest.Tbn = _ahrs.get_rotation_body_to_ned();
-    inertial_data_newest.inertialNavVelocity = _inav.get_velocity() * 0.01f;
-    inertial_data_newest.inertialNavVelocityValid = _inav.get_filter_status().flags.horiz_vel;
-    _inertial_history.push_back(inertial_data_newest);
+    Vector3f curr_vel;
+    nav_filter_status status;
+    if (!_ahrs.get_velocity_NED(curr_vel) || !_ahrs.get_filter_status(status)) {
+        inertial_data_newest.inertialNavVelocityValid = false;
+    } else {
+        inertial_data_newest.inertialNavVelocityValid = status.flags.horiz_vel;
+    }
+    curr_vel.z = -curr_vel.z;  // NED to NEU
+    inertial_data_newest.inertialNavVelocity = curr_vel;
+
+    inertial_data_newest.time_usec = AP_HAL::micros64();
+    _inertial_history->push_force(inertial_data_newest);
 
     // update estimator of target position
     if (_backend != nullptr && _enabled) {
