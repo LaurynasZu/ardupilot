@@ -116,8 +116,8 @@ private:
     // results are stored in_target_pos_rel_out_NE, _target_vel_rel_out_NE
     void run_output_prediction();
 
-    // references to inertial ahrs library
-    const AP_AHRS& _ahrs;
+    // references to ahrs library
+    const AP_AHRS&              _ahrs;
 
     // parameters
     AP_Int8                     _enabled;           // enabled/disabled and behaviour
