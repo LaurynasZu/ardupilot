@@ -113,7 +113,7 @@ const AP_Param::GroupInfo AC_PrecLand::var_info[] = {
 // Note that the Vector/Matrix constructors already implicitly zero
 // their values.
 //
-AC_PrecLand::AC_PrecLand(const AP_AHRS& ahrs, const AP_InertialNav& inav) :
+AC_PrecLand::AC_PrecLand(const AP_AHRS& ahrs) :
     _ahrs(ahrs),
     _inav(inav),
     _last_update_ms(0),
