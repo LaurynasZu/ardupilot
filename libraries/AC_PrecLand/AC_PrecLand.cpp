@@ -189,12 +189,12 @@ void AC_PrecLand::update(float rangefinder_alt_cm, bool rangefinder_alt_valid)
 
     // append current velocity and attitude correction into history buffer
     struct inertial_data_frame_s inertial_data_newest;
-    //const AP_AHRS_NavEKF &_ahrs = AP::ahrs_navekf();
-    _ahrs.getCorrectedDeltaVelocityNED(inertial_data_newest.correctedVehicleDeltaVelocityNED, inertial_data_newest.dt);
-    inertial_data_newest.Tbn = _ahrs.get_rotation_body_to_ned();
+    const AP_AHRS_NavEKF &_ahrseak = AP::ahrs_navekf();
+    _ahrseak.getCorrectedDeltaVelocityNED(inertial_data_newest.correctedVehicleDeltaVelocityNED, inertial_data_newest.dt);
+    inertial_data_newest.Tbn = _ahrseak.get_rotation_body_to_ned();
     Vector3f curr_vel;
     nav_filter_status status;
-    if (!_ahrs.get_velocity_NED(curr_vel) || !_ahrs.get_filter_status(status)) {
+    if (!_ahrseak.get_velocity_NED(curr_vel) || !_ahrseak.get_filter_status(status)) {
         inertial_data_newest.inertialNavVelocityValid = false;
     } else {
         inertial_data_newest.inertialNavVelocityValid = status.flags.horiz_vel;
