@@ -113,11 +113,12 @@ const AP_Param::GroupInfo AC_PrecLand::var_info[] = {
 // Note that the Vector/Matrix constructors already implicitly zero
 // their values.
 //
-//AC_PrecLand::AC_PrecLand()
-//{
-//    // set parameters to defaults
-//    AP_Param::setup_object_defaults(this, var_info);
-//}
+AC_PrecLand::AC_PrecLand(const AP_AHRS& ahr) :
+    _ahr(ahr) 
+{
+    // set parameters to defaults
+    AP_Param::setup_object_defaults(this, var_info);
+}
 
 // perform any required initialisation of landing controllers
 // update_rate_hz should be the rate at which the update method will be called in hz
@@ -388,17 +389,12 @@ bool AC_PrecLand::construct_pos_meas_using_rangefinder(float rangefinder_alt_m, 
     Vector3f target_vec_unit_body;
     Vector2f cur_pos;
     if (_type == 5) {
-        AC_PrecLand::AC_PrecLand(const AP_AHRS & ahrs) :
-            _ahrs(ahrs)
-        {
-            AP_Param::setup_object_defaults(this, var_info);
-        }
         bool alt_valid = (rangefinder_alt_valid && rangefinder_alt_m > 0.0f);
         //_ahrs.get_relative_position_NE_home(cur_pos);
         //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
         if (alt_valid) {
             float alt = MAX(rangefinder_alt_m, 0.0f);
-            if (_ahrs.get_relative_position_NE_home(cur_pos)) {
+            if (_ahr.get_relative_position_NE_home(cur_pos)) {
                 //::printf("chobits: %f %f\n", cur_pos.x, cur_pos.y);
                 //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
                 _target_pos_rel_meas_NED.x = -cur_pos.x;
