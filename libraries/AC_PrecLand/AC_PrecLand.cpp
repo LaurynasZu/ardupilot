@@ -115,10 +115,10 @@ const AP_Param::GroupInfo AC_PrecLand::var_info[] = {
 //
 //AC_PrecLand::AC_PrecLand(const AP_AHRS& ahrs) :
 //    _ahrs(ahrs)
-{
+//{
     // set parameters to defaults
     AP_Param::setup_object_defaults(this, var_info);
-}
+//}
 
 // perform any required initialisation of landing controllers
 // update_rate_hz should be the rate at which the update method will be called in hz
