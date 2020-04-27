@@ -449,7 +449,7 @@ void AC_PrecLand::run_output_prediction()
         _target_pos_rel_out_NE.y += _target_vel_rel_out_NE.y * inertial_data->dt;
     }
 
-    const AP_AHRS &_ahrs = AP::ahrs();
+    //const AP_AHRS &_ahrs = AP::ahrs();
 
     const Matrix3f& Tbn = (*_inertial_history)[_inertial_history->available()-1]->Tbn;
     Vector3f accel_body_offset = AP::ins().get_imu_pos_offset(_ahrs.get_primary_accel_index());
