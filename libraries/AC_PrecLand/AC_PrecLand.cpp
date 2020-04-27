@@ -114,7 +114,7 @@ const AP_Param::GroupInfo AC_PrecLand::var_info[] = {
 // their values.
 //
 AC_PrecLand::AC_PrecLand(const AP_AHRS& ahrs) :
-    _ahrs(ahrs)
+    _ahr(ahrs)
 {
     // set parameters to defaults
     AP_Param::setup_object_defaults(this, var_info);
@@ -189,7 +189,7 @@ void AC_PrecLand::update(float rangefinder_alt_cm, bool rangefinder_alt_valid)
 
     // append current velocity and attitude correction into history buffer
     struct inertial_data_frame_s inertial_data_newest;
-    AP_AHRS_NavEKF &_ahrs = AP::ahrs_navekf();
+    const AP_AHRS_NavEKF &_ahrs = AP::ahrs_navekf();
     _ahrs.getCorrectedDeltaVelocityNED(inertial_data_newest.correctedVehicleDeltaVelocityNED, inertial_data_newest.dt);
     inertial_data_newest.Tbn = _ahrs.get_rotation_body_to_ned();
     Vector3f curr_vel;
@@ -394,7 +394,7 @@ bool AC_PrecLand::construct_pos_meas_using_rangefinder(float rangefinder_alt_m, 
         //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
         if (alt_valid) {
             float alt = MAX(rangefinder_alt_m, 0.0f);
-            if (_ahrs.get_relative_position_NE_home(cur_pos)) {
+            if (_ahr.get_relative_position_NE_home(cur_pos)) {
                 //::printf("chobits: %f %f\n", cur_pos.x, cur_pos.y);
                 //hal.console->printf("chobits2: %f %f\n", cur_pos.x, cur_pos.y);
                 _target_pos_rel_meas_NED.x = -cur_pos.x;
